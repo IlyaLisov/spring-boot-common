@@ -1,6 +1,7 @@
 package io.github.ilyalisov.common.service;
 
 import io.github.ilyalisov.common.model.BaseEntity;
+import io.github.ilyalisov.common.model.criteria.Criteria;
 import org.springframework.data.domain.Page;
 
 import java.util.UUID;
