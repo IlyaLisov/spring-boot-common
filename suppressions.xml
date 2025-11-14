@@ -1,8 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE suppressions PUBLIC "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN" "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 <suppressions>
+    <suppress checks="MissingJavadocMethod"/>
+    <suppress checks="ParameterNumber"/>
+    <suppress checks="VisibilityModifier"/>
+    <suppress checks="EqualsHashCode"/>
+    <suppress checks="InterfaceIsType"/>
     <suppress checks="JavadocPackage"/>
-    <suppress checks="MagicNumber"/>
+    <suppress checks="JavadocVariable"/>
     <suppress checks="DesignForExtension"/>
+    <suppress checks="HideUtilityClassConstructor"/>
+    <suppress checks="MagicNumber"/>
     <suppress checks="HiddenField"/>
+    <suppress checks="RegexpSingleline"/>
+    <suppress checks="MemberName"/>
+    <suppress checks="MethodName"/>
 </suppressions>

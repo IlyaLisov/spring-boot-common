@@ -163,8 +163,8 @@
         </dependency>
         <dependency>
             <groupId>io.github.ilyalisov</groupId>
-            <artifactId>storage</artifactId>
-            <version>${storage.version}</version>
+            <artifactId>jwt</artifactId>
+            <version>${jwt.version}</version>
             <scope>provided</scope>
         </dependency>
 
