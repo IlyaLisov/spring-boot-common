@@ -1,4 +1,4 @@
-package io.github.ilyalisov.common.repository.specification;
+package io.github.ilyalisov.common.repository;
 
 import lombok.NoArgsConstructor;
 import org.hibernate.boot.model.FunctionContributions;
