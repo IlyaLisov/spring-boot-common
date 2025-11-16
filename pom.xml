@@ -58,7 +58,7 @@
         <log4j.version>2.24.3</log4j.version>
         <jwt.version>0.3.0</jwt.version>
         <storage.version>0.1.0</storage.version>
-        <mail.version>0.2.1</mail.version>
+        <mail.version>0.2.2</mail.version>
         <jacoco.version>0.8.12</jacoco.version>
     </properties>
 
