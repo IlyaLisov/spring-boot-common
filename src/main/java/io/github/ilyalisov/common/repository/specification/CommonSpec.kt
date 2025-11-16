@@ -92,7 +92,7 @@ object CommonSpec {
         }
     }
 
-    fun <T : BaseEntity, D : Comparable<D>> activeInPeriodSpec(
+    fun <T : BaseEntity, D : Comparable<D>> activeInPeriod(
         start: D?,
         end: D?
     ): Specification<T> {
