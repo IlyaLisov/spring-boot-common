@@ -55,7 +55,7 @@
         <checkstyle.version>3.6.0</checkstyle.version>
         <springdoc.version>2.6.0</springdoc.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <log4j.version>2.24.3</log4j.version>
+        <log4j.version>2.25.2</log4j.version>
         <jwt.version>0.3.0</jwt.version>
         <storage.version>0.1.0</storage.version>
         <mail.version>0.2.1</mail.version>
