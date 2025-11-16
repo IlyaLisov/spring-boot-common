@@ -51,7 +51,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.9.24</kotlin.version>
-        <instancio.version>4.8.1</instancio.version>
+        <instancio.version>5.5.1</instancio.version>
         <checkstyle.version>3.6.0</checkstyle.version>
         <springdoc.version>2.6.0</springdoc.version>
         <mapstruct.version>1.6.3</mapstruct.version>
