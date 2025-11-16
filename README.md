@@ -1,29 +1,57 @@
 # Spring Boot Common
 
-[![mvn](https://github.com/ilyalisov/spring-boot-common/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/ilyalisov/spring-boot-common/actions/workflows/build-and-test.yml)
-[![codecov](https://codecov.io/github/IlyaLisov/spring-boot-common/graph/badge.svg?token=0oAYzG58Tm)](https://codecov.io/github/IlyaLisov/spring-boot-common)
+[![Maven Build](https://github.com/ilyalisov/spring-boot-common/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/ilyalisov/spring-boot-common/actions/workflows/build-and-test.yml)
+[![Code Coverage](https://codecov.io/github/IlyaLisov/spring-boot-common/graph/badge.svg?token=0oAYzG58Tm)](https://codecov.io/github/IlyaLisov/spring-boot-common)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
 
-This library provides common classes for Spring Boot project, allowing you to
-save your time during implementing basic features.
+A comprehensive common library for Spring Boot projects that eliminates
+boilerplate code and accelerates development of REST APIs with security
+features.
 
-Look under content to see what you can do.
+## Table of Contents
 
-* [Description](#description)
-* [Install](#install)
-* [Components](#components)
+* [Features](#features)
+* [Quick Start](#quick-start)
+* [Installation](#installation)
+    * [Maven](#maven)
+    * [Gradle](#gradle)
+* [Core Components](#core-components)
+    * [Entity Management](#entity-management)
+    * [Criteria & Filtering](#criteria--filtering)
+    * [JWT Security](#jwt-security)
+    * [Exception Hierarchy](#exception-hierarchy)
+    * [Repository Specifications](#repository-specifications)
+    * [Service Layer](#service-layer)
+    * [DTOs and Mapping](#dtos-and-mapping)
+* [Usage Examples](#usage-examples)
+* [Configuration](#configuration)
 * [License](#license)
-* [Contribution](#contribution)
+* [Contributing](#contributing)
 
-## Description
+## Features
 
-Aim of this library is to decrease amount of boilerplate code used to start a
-new project. As we see, it needs about 20-30 classes to implement to start a
-simple REST with Spring Security. Now you need to only import this library and
-configure some beans.
+- **Pre-built Entities & Specifications** - Base entity model with common fields
+  and JPA specifications
+- **JWT Security** - Complete JWT token management with multiple token types
+- **CRUD Services** - Generic CRUD operations with pagination and filtering
+- **Exception Handling** - Comprehensive exception hierarchy with proper error
+  responses
+- **Validation Groups** - Flexible validation groups for different business
+  scenarios
+- **Mapper Interfaces** - Simplified DTO-entity mapping with field control
 
-## Install
+## Quick Start
 
-Add dependency to `pom.xml` if you use Maven:
+Get your Spring Boot application up and running in minutes instead of hours.
+This library provides all the essential components you need for a
+production-ready REST API.
+
+## Installation
+
+### Maven
+
+Add to your `pom.xml`:
 
 ```xml
 
@@ -34,65 +62,114 @@ Add dependency to `pom.xml` if you use Maven:
 </dependency>
 ```
 
-Or this script if you use Gradle:
+### Gradle
+
+Add to your `build.gradle` or `build.gradle.kts`:
 
 ```groovy
- implementation("io.github.ilyalisov:spring-boot-common:0.1.0")
+implementation("io.github.ilyalisov:spring-boot-common:0.1.0")
 ```
 
-## Components
+## Core Components
 
-### Entity
+### Entity Management
 
-Now there are some entities:
+#### BaseEntity
 
-`BaseEntity` - base entity class for your SQL entities. It has `UUID` id,
-`created` and `updated` timestamps, `status` field of `Status` class.
+The foundation for all your JPA entities with built-in common fields:
+
+```java
+
+@MappedSuperclass
+public abstract class BaseEntity {
+    private UUID id;
+    private LocalDateTime created;
+    private LocalDateTime updated;
+    private Status status;
+    // ... getters, setters, and lifecycle callbacks
+}
+```
 
 By extending of `BaseEntity` you can create your own entities.
 
-`Status` enum describes possible statuses of an entity:
+#### Status
 
-- `ACTIVE` - active entity
-- `NOT_ACTIVE` - entity pending to be active (e.g. user before email
-  verification)
-- `BLOCKED` - blocked entity
-- `DELETED` - deleted entity
-- `UNDER_MOBERATION` - entity being under moderation
-- `MODERATION_DECLINED` - entity after declined moderation
-- `DRAFT` - draft status of an entity
+Comprehensive status management for your entities:
 
-### Criteria
+- `ACTIVE` - Entity is active and visible
+- `NOT_ACTIVE` - Pending activation (e.g., email verification)
+- `BLOCKED` - Temporarily blocked
+- `DELETED` - Soft deleted
+- `UNDER_MODERATION` - Awaiting moderation approval
+- `MODERATION_DECLINED` - Rejected during moderation
+- `DRAFT` - Work in progress
+
+### Criteria & Filtering
+
+#### Criteria
 
 There is `Criteria` class. You can build handy criteria for your domain by
 extending this class. Base class have `pageId`, `perPage`, `query` and `status`
 params.
 
-### JWT
+Extendable criteria builder for complex queries with built-in pagination:
 
-There are some token types to create JWT tokens:
+```java
+public class UserCriteria extends Criteria {
+    private String email;
+    private String username;
+    private LocalDate registeredFrom;
+    private LocalDate registeredTo;
+    // ... your custom fields
+}
+```
 
-- `ACCESS` - for access tokens
-- `REFRESH` - for refresh tokens
-- `ACTIVATION` - for activation tokens,
-- `PASSWORD_RESET` - for password reset tokens,
-- `CUSTOM` - for any other tokens
+### JWT Security
 
-### Exceptions
+Complete JWT token management with multiple token types:
 
-There are some useful exceptions:
+- `ACCESS` - Short-lived access tokens
+- `REFRESH` - Long-lived refresh tokens
+- `ACTIVATION` - Account activation tokens
+- `PASSWORD_RESET` - Password recovery tokens
+- `CUSTOM` - Custom application tokens
 
-- `ResourceNotFoundException` - for not found resources
-- `AccessDeniedException` - for authentication exceptions
-- `ResourceAlreadyExistsException` - for duplicates
-- `DataNotValidException` - for invalid data
-- `TokenNotValidException` - for invalid tokens
-- `UploadException` - for exceptions during uploads
-- `NotEnoughMoneyException` - for insufficient balance
+### Exception Hierarchy
+
+Comprehensive exception system for proper error handling:
+
+```java
+// Resource not found scenarios
+throw new ResourceNotFoundException("User not found with id: "+userId);
+
+// Authentication and authorization
+throw new
+
+AccessDeniedException("Insufficient permissions");
+
+// Business rule violations
+throw new
+
+ResourceAlreadyExistsException("User already exists with this email");
+throw new
+
+DataNotValidException("Invalid input data");
+throw new
+
+TokenNotValidException("Expired or invalid token");
+throw new
+
+NotEnoughMoneyException("Insufficient balance for transaction");
+
+// System errors
+throw new
+
+UploadException("Failed to upload file to storage");
+```
 
 You can use `MessageDto` class for error responding in `ControllerAdvice`.
 
-### Repository
+### Repository Specifications
 
 We prefer to use JPA Specification to filter data. So there are some useful
 common specifications:
@@ -109,66 +186,165 @@ common specifications:
 
 There is utility classes for joins in specifications.
 
-### Service
+### Service Layer
 
-We added `CrudService<Entity, Criteria>` to decrease amount of common code by
-entities.
+#### CrudService<Entity, Criteria>
 
-There are some useful methods of CRUD operations:
+Generic CRUD operations with built-in best practices:
 
-- `Entity getById(UUID, boolean)` - if `false` it should throw
-  `ResourceNotFoundException`
-- `Entity getById(UUID)` - `getById(UUID, false)`
-- `Page<Entity> getAll(Criteria)` - returns a page of entities corresponding to
-  criteria
-- `Page<Entity> getAllByAuthorId(UUID, Criteria)` - returns a page of entities
-  corresponding to criteria with author's id
-- `long countAll(Criteria)` - counts all entities by criteria
-- `Entity create(Entity)` - saves an entity to database
-- `Entity update(Entity)` - updates an entity in database
-- `void detele(UUID)` - marks entity as deleted in database
+```java
+public interface CrudService<E extends BaseEntity, C extends Criteria> {
 
-`Blockable` service provides two additional methods for entities that can be
-blocked (e.g. users, posts, comments):
+    // Safe entity retrieval
+    E getById(UUID id); // Throws ResourceNotFoundException if not found
 
-- `void block(UUID)` - marks entity as blocked by id
-- `void unblock(UUID)` - marks entity as unblocked by id
+    E getById(UUID id, boolean safe); // Conditional exception throwing
 
-`Moderatable` service provides two additional methods for entities that can be
-moderated (e.g. posts, comments):
+    // Paginated queries
+    Page<E> getAll(C criteria);
 
-- `void allow(UUID)` - marks entity as allowed (status `ACTIVE`) by id
-- `void disallow(UUID)` - marks entity as disallowed (status
-  `MODERATION_DECLINED`) by id
+    Page<E> getAllByAuthorId(UUID authorId, C criteria);
 
-### DTOs and Mappers
+    // Counting and aggregation
+    long countAll(C criteria);
 
-This library has two main interfaces for mappers.
+    // Lifecycle management
+    E create(E entity);
 
-`Mappable<Entity, DTO>` - mapper for any classes. Provides next methods:
+    E update(E entity);
 
-- `Entity toEntity(DTO)`
-- `List<Entity> toEntity(List<DTO>)`
-- `DTO toDto(Entity)`
-- `List<DTO> toDto(List<Entity>)`
+    void delete(UUID id);
+}
+```
 
-`BaseMappable<Entity: BaseEntity, DTO>` extends `Mappable` with ignoring of
-`status`, `created` and `updated` fields that can be received from DTO.
+#### Specialized Service Interfaces
 
-You can see some basic interfaces for validation groups:
+`Blockable` Service - For entities requiring blocking functionality:
 
-- `OnPublish` - in case of validation for publishing
-- `OnUpdate` - in case of validation for entity updates
-- `OnCreate` - in case of validation for entity creates
-- `NestedObjectId` - in case of validation for lists of entities where you need
-  only ids
-- `OnAnyId` - in case of validation with or without id
+```java
+void block(UUID id);    // Mark as BLOCKED
+
+void unblock(UUID id);  // Restore to ACTIVE
+```
+
+`Moderatable` Service - For content moderation workflows:
+
+```java
+void allow(UUID id);    // Approve → ACTIVE
+
+void disallow(UUID id); // Reject → MODERATION_DECLINED
+```
+
+### DTOs and Mapping
+
+#### Mappable
+
+Flexible mapping interface with batch operations:
+
+```java
+public interface Mappable<E, D> {
+    E toEntity(D dto);
+
+    List<E> toEntity(List<D> dtos);
+
+    D toDto(E entity);
+
+    List<D> toDto(List<E> entities);
+}
+```
+
+BaseMappable<Entity extends BaseEntity, DTO>
+
+Extended mapper that automatically ignores audit fields (status, created,
+updated) when mapping from DTO to entity.
+
+#### Validation Groups
+
+Structured validation for different business scenarios:
+
+- `OnCreate` - Validation rules for new entity creation
+- `OnUpdate` - Validation rules for existing entity updates
+- `OnPublish` - Validation rules before publishing content
+- `NestedObjectId` - Validation for entity references in nested objects
+- `OnAnyId` - Flexible ID validation (optional or required)
+
+## Usage Examples
+
+#### Complete Entity Setup
+
+```java
+
+@Entity
+public class User extends BaseEntity {
+    private String username;
+    private String email;
+    private String password;
+// ... your fields
+}
+
+public class UserCriteria extends Criteria {
+    private String email;
+    private Boolean active;
+// ... your criteria
+}
+
+@Service
+public class UserService implements CrudService<User, UserCriteria> {
+// Inherits all CRUD operations + add your business logic
+}
+```
+
+#### Custom Specification Usage
+
+```java
+
+@Repository
+public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificationExecutor<User> {
+}
+
+@Service
+public class UserService {
+
+    public Page<User> findActiveUsersRegisteredLastMonth(UserCriteria criteria) {
+        Specification<User> spec = isActive()
+                .and(inPeriod(LocalDateTime.now().minusMonths(1), LocalDateTime.now()))
+                .and(hasEmailLike(criteria.getEmail()));
+
+        return userRepository.findAll(spec, criteria.getPageable());
+    }
+}
+```
+
+#### Exception Handling in Controllers
+
+```java
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<MessageDto> handleNotFound(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new MessageDto(ex.getMessage()));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<MessageDto> handleAccessDenied(AccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new MessageDto(ex.getMessage()));
+    }
+}
+```
 
 ## License
 
-This library is under [MIT license](./LICENSE).
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE)
+file for details.
 
 ## Contribution
+
+We welcome contributions! Please feel free to submit issues and enhancement
+requests.
 
 To contribute, make a fork and open a pull request. You can find
 issues [here](https://github.com/ilyalisov/spring-boot-common/issues).
