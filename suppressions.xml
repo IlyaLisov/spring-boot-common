@@ -15,4 +15,5 @@
     <suppress checks="RegexpSingleline"/>
     <suppress checks="MemberName"/>
     <suppress checks="MethodName"/>
+    <suppress checks="JavadocStyle"/>
 </suppressions>
