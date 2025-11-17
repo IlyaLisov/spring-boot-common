@@ -1,23 +1,29 @@
 package io.github.ilyalisov.common.model
 
-class ResourceNotFoundException : RuntimeException()
+class ResourceNotFoundException(
+    message: String? = null
+) : RuntimeException(message)
 
-class AccessDeniedException : RuntimeException()
+class AccessDeniedException(
+    message: String? = null
+) : RuntimeException(message)
 
 class ResourceAlreadyExistsException(
-    message: String?
+    message: String? = null
 ) : RuntimeException(message)
 
 class DataNotValidException(
-    message: String?
+    message: String? = null
 ) : RuntimeException(message)
 
 class TokenNotValidException(
-    message: String?
+    message: String? = null
 ) : RuntimeException(message)
 
 class UploadException(
-    message: String?
+    message: String? = null
 ) : RuntimeException(message)
 
-class NotEnoughMoneyException : RuntimeException()
+class NotEnoughMoneyException(
+    message: String? = null
+) : RuntimeException(message)
