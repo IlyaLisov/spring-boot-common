@@ -11,7 +11,11 @@
     <packaging>jar</packaging>
 
     <name>Spring Boot Common Library</name>
-    <description>Common library for Spring Boot projects with auth, security, mappers, services and utilities</description>
+    <description>
+        A comprehensive common library for Spring Boot projects that
+        eliminates boilerplate code and accelerates development of REST APIs
+        with security features
+    </description>
     <inceptionYear>2025</inceptionYear>
     <licenses>
         <license>
