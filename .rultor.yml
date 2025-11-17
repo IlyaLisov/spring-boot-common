@@ -13,7 +13,7 @@ release:
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mvn compile -DskipTests
-    mvn clean deploy -Djavadoc.skip=true -DskipTests -P release --errors --settings ../settings.xml
+    mvn clean deploy -DskipTests -P release --errors --settings ../settings.xml
     git tag -a "${tag}" -m "Release ${tag}"
     git push origin "${tag}"
     git push origin master
