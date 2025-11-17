@@ -20,7 +20,6 @@ import java.util.Objects;
  *
  * @author Ilya Lisov
  * @see Pageable
- * @see Status
  * @see SuperBuilder
  * @since 0.1.0
  */
@@ -157,7 +156,6 @@ public abstract class Criteria {
          *
          * @param status the status to filter by, can be null to use default
          * @return the builder instance for method chaining
-         * @see Status
          */
         public B status(
                 final Status status

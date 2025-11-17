@@ -39,7 +39,6 @@ import java.util.UUID;
  * @author Ilya Lisov
  * @see Serializable
  * @see MappedSuperclass
- * @see Status
  * @since 0.1.0
  */
 @MappedSuperclass
