@@ -7,7 +7,7 @@
 
     <groupId>io.github.ilyalisov</groupId>
     <artifactId>spring-boot-common</artifactId>
-    <version>0.1.0</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <name>Spring Boot Common Library</name>
