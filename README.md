@@ -19,7 +19,7 @@ features.
 * [Core Components](#core-components)
     * [Entity Management](#entity-management)
     * [Criteria & Filtering](#criteria--filtering)
-    * [JWT Security](#jwt-security)
+    * [JWT & Security](#jwt--security)
     * [Exception Hierarchy](#exception-hierarchy)
     * [Repository Specifications](#repository-specifications)
     * [Service Layer](#service-layer)
@@ -33,7 +33,8 @@ features.
 
 - **Pre-built Entities & Specifications** - Base entity model with common fields
   and JPA specifications
-- **JWT Security** - Complete JWT token management with multiple token types
+- **JWT Security** - Complete JWT token management with multiple token types,
+  token service and many more
 - **CRUD Services** - Generic CRUD operations with pagination and filtering
 - **Exception Handling** - Comprehensive exception hierarchy with proper error
   responses
@@ -58,7 +59,7 @@ Add to your `pom.xml`:
 <dependency>
     <groupId>io.github.ilyalisov</groupId>
     <artifactId>spring-boot-common</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
@@ -109,8 +110,8 @@ Comprehensive status management for your entities:
 #### Criteria
 
 There is `Criteria` class. You can build handy criteria for your domain by
-extending this class. Base class have `pageId`, `perPage`, `query` and `status`
-params.
+extending this class. Base class have `pageId`, `perPage`, `query`, `status`
+and `authorId` params.
 
 Extendable criteria builder for complex queries with built-in pagination:
 
@@ -124,7 +125,7 @@ public class UserCriteria extends Criteria {
 }
 ```
 
-### JWT Security
+### JWT & Security
 
 Complete JWT token management with multiple token types:
 
@@ -134,37 +135,44 @@ Complete JWT token management with multiple token types:
 - `PASSWORD_RESET` - Password recovery tokens
 - `CUSTOM` - Custom application tokens
 
+You have a `TokenService` bean at a startup. Just provide next properties in
+`application.yaml`:
+
+```yaml
+security:
+  jwt:
+    secret: some-encoded-in-base-64-string
+    access: 30m
+    refresh: 1d
+    activation: 1d
+    reset: 1h
+```
+
+You have a default `BCryptEncoder` `PassowrdEncoder` bean at a startup. You can
+create your own `PasswordEncoder` bean and use it instead.
+
+We use [this jwt library](https://github.com/ilyalisov/jwt) for dealing with
+tokens.
+
 ### Exception Hierarchy
 
 Comprehensive exception system for proper error handling:
 
 ```java
 // Resource not found scenarios
-throw new ResourceNotFoundException("User not found with id: "+userId);
+throw new ResourceNotFoundException("User not found with id: " + userId);
 
 // Authentication and authorization
-throw new
-
-AccessDeniedException("Insufficient permissions");
+throw new AccessDeniedException("Insufficient permissions");
 
 // Business rule violations
-throw new
-
-ResourceAlreadyExistsException("User already exists with this email");
-throw new
-
-DataNotValidException("Invalid input data");
-throw new
-
-TokenNotValidException("Expired or invalid token");
-throw new
-
-NotEnoughMoneyException("Insufficient balance for transaction");
+throw new ResourceAlreadyExistsException("User already exists with this email");
+throw new DataNotValidException("Invalid input data");
+throw new TokenNotValidException("Expired or invalid token");
+throw new NotEnoughMoneyException("Insufficient balance for transaction");
 
 // System errors
-throw new
-
-UploadException("Failed to upload file to storage");
+throw new UploadException("Failed to upload file to storage");
 ```
 
 You can use `MessageDto` class for error responding in `ControllerAdvice`.
@@ -183,6 +191,8 @@ common specifications:
   field
 - `activeInPeriod(Comparable, Comparable)` - specification combining active and
   created in period entities
+- `containsQuery(String, String)` - specification for filtering entities by
+`fts` column - full text search from Postgresql
 
 There is utility classes for joins in specifications.
 
@@ -202,8 +212,6 @@ public interface CrudService<E extends BaseEntity, C extends Criteria> {
 
     // Paginated queries
     Page<E> getAll(C criteria);
-
-    Page<E> getAllByAuthorId(UUID authorId, C criteria);
 
     // Counting and aggregation
     long countAll(C criteria);
@@ -273,7 +281,6 @@ Structured validation for different business scenarios:
 #### Complete Entity Setup
 
 ```java
-
 @Entity
 public class User extends BaseEntity {
     private String username;
@@ -297,7 +304,6 @@ public class UserService implements CrudService<User, UserCriteria> {
 #### Custom Specification Usage
 
 ```java
-
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificationExecutor<User> {
 }
@@ -318,7 +324,6 @@ public class UserService {
 #### Exception Handling in Controllers
 
 ```java
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
