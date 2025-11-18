@@ -109,6 +109,29 @@ public abstract class Criteria {
         }
 
         /**
+         * Copy constructor that creates a new builder instance initialized with
+         * values from an existing criteria object. This is useful for creating
+         * modified versions of existing criteria while preserving the original
+         * filtering and pagination settings.
+         *
+         * @param criteria the existing criteria object to copy values from,
+         *                 must not be null
+         * @throws IllegalArgumentException if the criteria parameter is null
+         */
+        public CriteriaBuilder(
+                final Criteria criteria
+        ) {
+            if (criteria == null) {
+                throw new IllegalArgumentException("Criteria cannot be null");
+            }
+            this.pageId = criteria.getPageId();
+            this.perPage = criteria.getPerPage();
+            this.status = criteria.getStatus();
+            this.authorId = criteria.getAuthorId();
+            this.query = criteria.getQuery();
+        }
+
+        /**
          * Sets the page number for pagination.
          * <p>
          * If the provided pageId is null, defaults to 1.
@@ -122,7 +145,7 @@ public abstract class Criteria {
         public B pageId(
                 final Integer pageId
         ) {
-            if (pageId < 1) {
+            if (pageId != null && pageId < 1) {
                 throw new IllegalArgumentException(
                         "pageId must be greater than 1"
                 );
@@ -149,7 +172,7 @@ public abstract class Criteria {
         public B perPage(
                 final Integer perPage
         ) {
-            if (perPage < 1) {
+            if (perPage != null && perPage < 1) {
                 throw new IllegalArgumentException(
                         "perPage must be greater than 1"
                 );
