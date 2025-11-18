@@ -124,9 +124,12 @@ object CommonSpec {
      * @return Specification that matches entities with the given author ID
      */
     fun <T : BaseEntity> hasAuthorId(
-        id: UUID
+        id: UUID?
     ): Specification<T> {
         return Specification { root, _, criteriaBuilder ->
+            if (id == null) {
+                criteriaBuilder.conjunction();
+            }
             criteriaBuilder.equal(
                 root.get<Any>("author")
                     .get<UUID>("id"),
