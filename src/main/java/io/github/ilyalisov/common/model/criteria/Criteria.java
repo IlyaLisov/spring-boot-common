@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Abstract base class for all criteria implementations used for filtering and
@@ -19,6 +20,7 @@ import java.util.Objects;
  * </p>
  *
  * @author Ilya Lisov
+ * @see Status
  * @see Pageable
  * @see SuperBuilder
  * @since 0.1.0
@@ -44,6 +46,18 @@ public abstract class Criteria {
      * Used to filter entities based on their status.
      */
     protected Status status;
+
+    /**
+     * The UUID of the author/creator of the entity. Used to filter entities
+     * based on their authorship. When specified, the criteria will only match
+     * entities that were created by the user with this specific ID.
+     * <p>
+     * This field is typically used in scenarios where users need to view or
+     * manage only their own content, or when implementing user-specific
+     * data access controls.
+     * </p>
+     */
+    protected UUID authorId;
 
     /**
      * The search query string for text-based filtering.
@@ -156,6 +170,7 @@ public abstract class Criteria {
          *
          * @param status the status to filter by, can be null to use default
          * @return the builder instance for method chaining
+         * @see Status
          */
         public B status(
                 final Status status
@@ -164,6 +179,27 @@ public abstract class Criteria {
                     status,
                     Status.ACTIVE
             );
+            return self();
+        }
+
+        /**
+         * Sets the author ID for filtering entities by their creator. When this
+         * method is called, the criteria will only return entities that were
+         * created by the specified author.
+         * <p>
+         * This is useful for implementing user-specific views, personal
+         * dashboards, or access control scenarios where users should only see
+         * their own content.
+         * </p>
+         *
+         * @param authorId the UUID of the author to filter by, can be null to
+         *                 clear author filtering
+         * @return the builder instance for method chaining
+         */
+        public B authorId(
+                final UUID authorId
+        ) {
+            this.authorId = authorId;
             return self();
         }
 
