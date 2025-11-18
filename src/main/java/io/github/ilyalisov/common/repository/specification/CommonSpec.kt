@@ -2,6 +2,7 @@ package io.github.ilyalisov.common.repository.specification
 
 import io.github.ilyalisov.common.model.BaseEntity
 import io.github.ilyalisov.common.model.Status
+import modifyFTS
 import org.springframework.data.jpa.domain.Specification
 import java.util.*
 
@@ -204,6 +205,72 @@ object CommonSpec {
                 end
             )
         )
+    }
+
+    /**
+     * Creates a specification for full-text search using PostgreSQL's tsvector
+     * functionality. This specification performs text search with ranking and
+     * ordering by relevance using the specified dictionary configuration.
+     *
+     * The specification:
+     * - Converts the search query to tsquery format using the specified
+     * dictionary
+     * - Orders results by relevance using ts_rank_cd function
+     * - Filters results using custom tsvector_match function
+     * - Returns all results (no filtering) when search query is null or empty
+     *
+     * @param T the type of entity to search
+     * @param searchQuery the search query string to match against. If null or
+     * blank, returns a specification that matches all entities (no filtering
+     * applied)
+     * @param literal the PostgreSQL text search dictionary to use for
+     * tokenization and stemming. Defaults to "russian". Common values include:
+     *        - "russian" - for Russian language
+     *        - "english" - for English language
+     *        - "simple" - language-independent simple dictionary
+     * @return Specification that performs full-text search with relevance
+     * ranking or matches all entities if search query is null/empty
+     *
+     * @throws IllegalArgumentException if the entity does not have "fts" field
+     *         of tsvector type or if the specified dictionary is not available
+     *
+     * @see modifyFTS
+     * @see tsvector_match
+     */
+    fun <T> containsQuery(
+        searchQuery: String?,
+        literal: String = "russian"
+    ): Specification<T> {
+        return Specification { root, query, criteriaBuilder ->
+            if (searchQuery.isNullOrBlank()) {
+                criteriaBuilder.conjunction()
+            }
+            val modifiedQuery = modifyFTS(searchQuery)
+            val tsquery = criteriaBuilder.function(
+                "to_tsquery",
+                String::class.java,
+                criteriaBuilder.literal(literal),
+                criteriaBuilder.literal(modifiedQuery)
+            )
+            query.orderBy(
+                criteriaBuilder.desc(
+                    criteriaBuilder.function(
+                        "ts_rank_cd",
+                        Double::class.java,
+                        root.get<Any>("fts"),
+                        tsquery
+                    )
+                )
+            )
+            criteriaBuilder.isTrue(
+                criteriaBuilder.function(
+                    "tsvector_match",
+                    Boolean::class.java,
+                    root.get<Any>("fts"),
+                    tsquery
+                )
+            )
+        }
     }
 
 }
