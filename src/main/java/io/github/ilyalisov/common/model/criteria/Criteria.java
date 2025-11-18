@@ -121,9 +121,10 @@ public abstract class Criteria {
         public CriteriaBuilder(
                 final Criteria criteria
         ) {
-            if (criteria == null) {
-                throw new IllegalArgumentException("Criteria cannot be null");
-            }
+            Objects.requireNonNull(
+                    criteria,
+                    "Criteria cannot be null"
+            );
             this.pageId = criteria.getPageId();
             this.perPage = criteria.getPerPage();
             this.status = criteria.getStatus();
@@ -147,7 +148,7 @@ public abstract class Criteria {
         ) {
             if (pageId != null && pageId < 1) {
                 throw new IllegalArgumentException(
-                        "pageId must be greater than 1"
+                        "pageId must be greater than or equal to 1"
                 );
             }
             this.pageId = Objects.requireNonNullElse(
@@ -174,7 +175,7 @@ public abstract class Criteria {
         ) {
             if (perPage != null && perPage < 1) {
                 throw new IllegalArgumentException(
-                        "perPage must be greater than 1"
+                        "perPage must be greater than or equal to 1"
                 );
             }
             this.perPage = Objects.requireNonNullElse(
