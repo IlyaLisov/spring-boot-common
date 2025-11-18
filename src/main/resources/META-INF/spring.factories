@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+io.github.ilyalisov.common.config.CommonBeanConfig,\
+io.github.ilyalisov.common.config.JwtAutoConfiguration
