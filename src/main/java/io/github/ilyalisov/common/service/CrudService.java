@@ -28,8 +28,8 @@ public interface CrudService<T extends BaseEntity, C extends Criteria> {
      *
      * @param id the UUID of the entity to retrieve
      * @return the found entity
-     * @throws io.github.ilyalisov.common.model.ResourceNotFoundException if
-     * the entity is not found or not accessible with normal visibility rules
+     * @throws io.github.ilyalisov.common.model.ResourceNotFoundException
+     * if the entity is not found or not accessible with normal visibility rules
      */
     default T getById(
             final UUID id
@@ -47,8 +47,8 @@ public interface CrudService<T extends BaseEntity, C extends Criteria> {
      * @param showAnyway if true, bypasses normal visibility rules and
      *                   status filters
      * @return the found entity
-     * @throws io.github.ilyalisov.common.model.ResourceNotFoundException if
-     * the entity is not found
+     * @throws io.github.ilyalisov.common.model.ResourceNotFoundException
+     * if the entity is not found
      */
     T getById(
             UUID id,
@@ -64,20 +64,6 @@ public interface CrudService<T extends BaseEntity, C extends Criteria> {
      * @return a page of entities matching the criteria
      */
     Page<T> getAll(
-            C criteria
-    );
-
-    /**
-     * Retrieves a paginated list of entities created by a specific author
-     * and matching the provided criteria. Useful for user-specific data
-     * views and personal dashboards.
-     *
-     * @param authorId the UUID of the author to filter by
-     * @param criteria the filtering and pagination criteria
-     * @return a page of entities by the author matching the criteria
-     */
-    Page<T> getAllByAuthorId(
-            UUID authorId,
             C criteria
     );
 
@@ -101,8 +87,8 @@ public interface CrudService<T extends BaseEntity, C extends Criteria> {
      * @return the created entity with generated fields (ID, timestamps)
      * @throws io.github.ilyalisov.common.model.ResourceAlreadyExistsException
      * if an entity with conflicting unique constraints exists
-     * @throws io.github.ilyalisov.common.model.DataNotValidException if the
-     * input data fails validation
+     * @throws io.github.ilyalisov.common.model.DataNotValidException
+     * if the input data fails validation
      */
     T create(
             T dto
@@ -115,10 +101,10 @@ public interface CrudService<T extends BaseEntity, C extends Criteria> {
      *
      * @param dto the entity data to update
      * @return the updated entity
-     * @throws io.github.ilyalisov.common.model.ResourceNotFoundException if
-     * the entity to update is not found
-     * @throws io.github.ilyalisov.common.model.DataNotValidException if the
-     * input data fails validation
+     * @throws io.github.ilyalisov.common.model.ResourceNotFoundException
+     * if the entity to update is not found
+     * @throws io.github.ilyalisov.common.model.DataNotValidException
+     * if the input data fails validation
      */
     T update(
             T dto
@@ -130,8 +116,8 @@ public interface CrudService<T extends BaseEntity, C extends Criteria> {
      * from the database, preserving data integrity and audit history.
      *
      * @param id the UUID of the entity to delete
-     * @throws io.github.ilyalisov.common.model.ResourceNotFoundException if
-     * the entity to delete is not found
+     * @throws io.github.ilyalisov.common.model.ResourceNotFoundException
+     * if the entity to delete is not found
      */
     void delete(
             UUID id
