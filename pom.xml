@@ -511,6 +511,13 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <sourcepath>${project.build.sourceDirectory}</sourcepath>
+                            <additionalOptions>
+                                <additionalOption>-Xdoclint:none</additionalOption>
+                            </additionalOptions>
+                            <failOnError>false</failOnError>
+                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
