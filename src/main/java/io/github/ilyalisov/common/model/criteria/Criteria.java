@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -279,5 +280,32 @@ public abstract class Criteria {
     public abstract Pageable getPageable(
             Sort defaultSort
     );
+
+    /**
+     * Converts this criteria instance into a JPA {@link Specification} for the
+     * given entity class.
+     * <p>
+     * This method transforms the filtering criteria (status, authorId, query,
+     * etc.) into a type-safe JPA Specification that can be used with Spring
+     * Data JPA repositories. Implementing classes should provide concrete
+     * implementations that handle domain-specific filtering logic.
+     * </p>
+     *
+     * @param <T>   the type of entity for which the specification is created
+     * @param clazz the class object representing the entity type,
+     *              must not be null
+     * @return a {@link Specification} instance that encapsulates all filtering
+     * conditions defined in this criteria
+     * @throws IllegalArgumentException      if entityClass is null
+     * @throws UnsupportedOperationException if not overridden in child class
+     * @see Specification
+     */
+    public <T> Specification<T> toSpec(
+            final Class<T> clazz
+    ) {
+        throw new UnsupportedOperationException(
+                "You need to implement this method."
+        );
+    }
 
 }
