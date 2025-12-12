@@ -129,18 +129,6 @@ You need to implement `toSpec` method that provides `Specification`
 corresponding to criteria. It allows you to use one method instead of
 manually creating a specification.
 
-By default, it throws `UnsupportedOperationException`:
-
-```java
-public <T> Specification<T> toSpec(
-        final Class<T> clazz
-) {
-    throw new UnsupportedOperationException(
-            "You need to implement this method."
-    );
-}
-```
-
 ### JWT & Security
 
 Complete JWT token management with multiple token types:
