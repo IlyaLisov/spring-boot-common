@@ -300,12 +300,8 @@ public abstract class Criteria {
      * @throws UnsupportedOperationException if not overridden in child class
      * @see Specification
      */
-    public <T> Specification<T> toSpec(
-            final Class<T> clazz
-    ) {
-        throw new UnsupportedOperationException(
-                "You need to implement this method."
-        );
-    }
+    public abstract <T> Specification<T> toSpec(
+            Class<T> clazz
+    );
 
 }
