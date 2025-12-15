@@ -59,7 +59,7 @@ Add to your `pom.xml`:
 <dependency>
     <groupId>io.github.ilyalisov</groupId>
     <artifactId>spring-boot-common</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
 </dependency>
 ```
 
@@ -68,7 +68,7 @@ Add to your `pom.xml`:
 Add to your `build.gradle` or `build.gradle.kts`:
 
 ```groovy
-implementation("io.github.ilyalisov:spring-boot-common:0.1.0")
+implementation("io.github.ilyalisov:spring-boot-common:0.1.2")
 ```
 
 ## Core Components
