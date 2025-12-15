@@ -55,7 +55,7 @@ public abstract class BaseEntity implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JdbcTypeCode(SqlTypes.VARCHAR)
+    @JdbcTypeCode(SqlTypes.UUID)
     protected UUID id;
 
     /**
