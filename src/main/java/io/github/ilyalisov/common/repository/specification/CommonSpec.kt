@@ -129,7 +129,7 @@ object CommonSpec {
     ): Specification<T> {
         return Specification { root, _, criteriaBuilder ->
             if (id == null) {
-                criteriaBuilder.conjunction();
+                return@Specification criteriaBuilder.conjunction();
             }
             criteriaBuilder.equal(
                 root.get<Any>("author")
@@ -243,7 +243,7 @@ object CommonSpec {
     ): Specification<T> {
         return Specification { root, query, criteriaBuilder ->
             if (searchQuery.isNullOrBlank()) {
-                criteriaBuilder.conjunction()
+                return@Specification criteriaBuilder.conjunction()
             }
             val modifiedQuery = modifyFTS(searchQuery)
             val tsquery = criteriaBuilder.function(
