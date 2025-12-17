@@ -2,7 +2,7 @@ package io.github.ilyalisov.common.repository.specification
 
 import io.github.ilyalisov.common.model.BaseEntity
 import io.github.ilyalisov.common.model.Status
-import modifyFTS
+import io.github.ilyalisov.common.repository.modifyFTS
 import org.springframework.data.jpa.domain.Specification
 import java.util.*
 
