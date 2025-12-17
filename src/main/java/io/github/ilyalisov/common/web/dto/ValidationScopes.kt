@@ -85,4 +85,4 @@ interface NestedObjectId
  */
 interface OnAnyId
 
-const val MAX_FIELD_LENGTH = 255;
+const val MAX_FIELD_LENGTH = 255

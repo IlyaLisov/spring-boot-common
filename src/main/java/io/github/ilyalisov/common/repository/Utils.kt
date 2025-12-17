@@ -1,3 +1,5 @@
+package io.github.ilyalisov.common.repository
+
 /**
  * Converts a search query string to PostgreSQL tsquery format by adding
  * prefix matching operators to each word. This enables partial word
