@@ -26,6 +26,7 @@ import org.springframework.data.jpa.domain.Specification;
  * </p>
  *
  * @param <T> the type of the JPA entity for which the specification is built
+ * @param <C> the class of custom criteria for JPA entity
  * @author Ilya Lisov
  * @see Criteria
  * @see Specification
