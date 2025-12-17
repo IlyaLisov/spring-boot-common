@@ -31,7 +31,7 @@ import org.springframework.data.jpa.domain.Specification;
  * @see Specification
  * @since 0.1.3
  */
-public interface SpecBuilder<T> {
+public interface SpecBuilder<T, C extends Criteria> {
 
     /**
      * Builds a JPA {@link Specification} based on the provided
@@ -55,7 +55,7 @@ public interface SpecBuilder<T> {
      * are applicable
      */
     Specification<T> build(
-            Criteria criteria
+            C criteria
     );
 
 }
