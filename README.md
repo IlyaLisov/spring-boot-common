@@ -3,7 +3,7 @@
 [![Maven Build](https://github.com/ilyalisov/spring-boot-common/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/ilyalisov/spring-boot-common/actions/workflows/build-and-test.yml)
 [![Code Coverage](https://codecov.io/github/IlyaLisov/spring-boot-common/graph/badge.svg?token=0oAYzG58Tm)](https://codecov.io/github/IlyaLisov/spring-boot-common)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.1-brightgreen.svg)](https://spring.io/projects/spring-boot)
 
 A comprehensive common library for Spring Boot projects that eliminates
 boilerplate code and accelerates development of REST APIs with security
@@ -25,7 +25,9 @@ features.
     * [Service Layer](#service-layer)
     * [DTOs and Mapping](#dtos-and-mapping)
 * [Usage Examples](#usage-examples)
-* [Configuration](#configuration)
+    * [Complete Entity Setup](#complete-entity-setup)
+    * [Custom Specification Usage](#custom-specification-usage)
+    * [Exception Handling In Controllers](#exception-handling-in-controllers)
 * [License](#license)
 * [Contributing](#contributing)
 
@@ -160,19 +162,31 @@ Comprehensive exception system for proper error handling:
 
 ```java
 // Resource not found scenarios
-throw new ResourceNotFoundException("User not found with id: " + userId);
+throw new ResourceNotFoundException("User not found with id: "+userId);
 
 // Authentication and authorization
-throw new AccessDeniedException("Insufficient permissions");
+throw new
+
+AccessDeniedException("Insufficient permissions");
 
 // Business rule violations
-throw new ResourceAlreadyExistsException("User already exists with this email");
-throw new DataNotValidException("Invalid input data");
-throw new TokenNotValidException("Expired or invalid token");
-throw new NotEnoughMoneyException("Insufficient balance for transaction");
+throw new
+
+ResourceAlreadyExistsException("User already exists with this email");
+throw new
+
+DataNotValidException("Invalid input data");
+throw new
+
+TokenNotValidException("Expired or invalid token");
+throw new
+
+NotEnoughMoneyException("Insufficient balance for transaction");
 
 // System errors
-throw new UploadException("Failed to upload file to storage");
+throw new
+
+UploadException("Failed to upload file to storage");
 ```
 
 You can use `MessageDto` class for error responding in `ControllerAdvice`.
@@ -192,7 +206,7 @@ common specifications:
 - `activeInPeriod(Comparable, Comparable)` - specification combining active and
   created in period entities
 - `containsQuery(String, String)` - specification for filtering entities by
-`fts` column - full text search from Postgresql
+  `fts` column - full text search from Postgresql
 
 There is utility classes for joins in specifications.
 
@@ -278,9 +292,10 @@ Structured validation for different business scenarios:
 
 ## Usage Examples
 
-#### Complete Entity Setup
+### Complete Entity Setup
 
 ```java
+
 @Entity
 public class User extends BaseEntity {
     private String username;
@@ -301,9 +316,10 @@ public class UserService implements CrudService<User, UserCriteria> {
 }
 ```
 
-#### Custom Specification Usage
+### Custom Specification Usage
 
 ```java
+
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificationExecutor<User> {
 }
@@ -321,9 +337,10 @@ public class UserService {
 }
 ```
 
-#### Exception Handling in Controllers
+### Exception Handling in Controllers
 
 ```java
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -346,7 +363,7 @@ public class GlobalExceptionHandler {
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE)
 file for details.
 
-## Contribution
+## Contributing
 
 We welcome contributions! Please feel free to submit issues and enhancement
 requests.
