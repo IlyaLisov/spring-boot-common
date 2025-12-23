@@ -4,6 +4,7 @@
 [![Code Coverage](https://codecov.io/github/IlyaLisov/spring-boot-common/graph/badge.svg?token=0oAYzG58Tm)](https://codecov.io/github/IlyaLisov/spring-boot-common)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.1-brightgreen.svg)](https://spring.io/projects/spring-boot)
+![Maven Central](https://img.shields.io/maven-central/v/io.github.ilyalisov/spring-boot-common)
 
 A comprehensive common library for Spring Boot projects that eliminates
 boilerplate code and accelerates development of REST APIs with security
