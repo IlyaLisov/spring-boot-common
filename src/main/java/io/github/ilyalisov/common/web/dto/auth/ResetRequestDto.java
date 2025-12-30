@@ -12,15 +12,10 @@ import org.hibernate.validator.constraints.Length;
 @ToString
 public class ResetRequestDto {
 
-    @Length(
-            min = 1,
-            max = ValidationScopesKt.MAX_FIELD_LENGTH,
-            message = "Username length must be in {min} - {max} symbols."
-    )
     @NotEmpty(
-            message = "Username can not be empty."
+            message = "Reset token can not be empty."
     )
-    private String username;
+    private String resetToken;
 
     @Length(
             min = 1,
