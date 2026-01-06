@@ -163,31 +163,19 @@ Comprehensive exception system for proper error handling:
 
 ```java
 // Resource not found scenarios
-throw new ResourceNotFoundException("User not found with id: "+userId);
+throw new ResourceNotFoundException("User not found with id: " + userId);
 
 // Authentication and authorization
-throw new
-
-AccessDeniedException("Insufficient permissions");
+throw new AccessDeniedException("Insufficient permissions");
 
 // Business rule violations
-throw new
-
-ResourceAlreadyExistsException("User already exists with this email");
-throw new
-
-DataNotValidException("Invalid input data");
-throw new
-
-TokenNotValidException("Expired or invalid token");
-throw new
-
-NotEnoughMoneyException("Insufficient balance for transaction");
+throw new ResourceAlreadyExistsException("User already exists with this email");
+throw new DataNotValidException("Invalid input data");
+throw new TokenNotValidException("Expired or invalid token");
+throw new NotEnoughMoneyException("Insufficient balance for transaction");
 
 // System errors
-throw new
-
-UploadException("Failed to upload file to storage");
+throw new UploadException("Failed to upload file to storage");
 ```
 
 You can use `MessageDto` class for error responding in `ControllerAdvice`.
