@@ -69,7 +69,7 @@ public class CommonBeanConfig {
                 || jwtProperties.getSecret().trim().isEmpty()) {
             throw new IllegalStateException(
                     "JWT secret must be configured in application "
-                            + "properties with prefix 'jwt'"
+                            + "properties with prefix 'security.jwt'"
             );
         }
         return new TokenServiceImpl(
