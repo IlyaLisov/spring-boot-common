@@ -8,13 +8,15 @@ package io.github.ilyalisov.common.web.dto
  * @param message the main message describing the result or error
  * @param errors a map of field-specific error messages, where keys represent
  *        field names and values contain error descriptions
+ * @param traceId the unique identifier for the request/exception
  *
  * @author Ilya Lisov
  * @since 0.1.0
  */
 data class MessageDto(
     val message: String,
-    val errors: Map<String, String>
+    val errors: Map<String, String>,
+    val traceId: String? = null
 ) {
     /**
      * Secondary constructor for creating a MessageDto with only a main message
@@ -23,5 +25,22 @@ data class MessageDto(
      *
      * @param message the main message describing the result or error
      */
-    constructor(message: String) : this(message, emptyMap())
+    constructor(message: String) : this(
+        message,
+        emptyMap(),
+        null
+    )
+
+    /**
+     * Secondary constructor for creating a MessageDto with message and trace
+     * ID.
+     *
+     * @param message the main message describing the result or error
+     * @param traceId the unique identifier for the request/exception
+     */
+    constructor(message: String, traceId: String?) : this(
+        message,
+        emptyMap(),
+        traceId
+    )
 }
