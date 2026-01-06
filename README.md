@@ -71,7 +71,7 @@ Add to your `pom.xml`:
 Add to your `build.gradle` or `build.gradle.kts`:
 
 ```groovy
-implementation("io.github.ilyalisov:spring-boot-common:0.1.3")
+implementation("io.github.ilyalisov:spring-boot-common:0.1.4")
 ```
 
 ## Core Components
