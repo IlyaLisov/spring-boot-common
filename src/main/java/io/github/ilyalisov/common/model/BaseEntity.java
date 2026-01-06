@@ -121,7 +121,7 @@ public abstract class BaseEntity implements Serializable {
             return false;
         }
         BaseEntity that = (BaseEntity) o;
-        return id.equals(that.id);
+        return id != null && id.equals(that.id);
     }
 
     /**

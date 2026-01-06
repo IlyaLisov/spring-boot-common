@@ -54,7 +54,7 @@ public class CommonBeanConfig {
      * <p>
      * This bean is configured using JWT properties from the application
      * configuration (application.yaml or application.properties) with
-     * prefix "jwt". The service requires a secret key to be configured.
+     * prefix "security.jwt". The service requires a secret key to be configured.
      * </p>
      *
      * @return TokenService instance configured with JWT properties
