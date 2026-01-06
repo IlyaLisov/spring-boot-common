@@ -62,7 +62,7 @@ Add to your `pom.xml`:
 <dependency>
     <groupId>io.github.ilyalisov</groupId>
     <artifactId>spring-boot-common</artifactId>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
 </dependency>
 ```
 

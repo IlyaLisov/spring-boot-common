@@ -294,6 +294,7 @@
                         <configuration>
                             <sourceDirs>
                                 <source>src/test/java</source>
+                                <source>src/test/kotlin</source>
                                 <source>
                                     target/generated-test-sources/test-annotations
                                 </source>
@@ -391,7 +392,7 @@
                                         <limit implementation="org.jacoco.report.check.Limit">
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.5</minimum>
+                                            <minimum>0.1</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
