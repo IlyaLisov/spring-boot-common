@@ -3,6 +3,9 @@ package io.github.ilyalisov.common.repository.specification
 import io.github.ilyalisov.common.model.BaseEntity
 import io.github.ilyalisov.common.model.Status
 import io.github.ilyalisov.common.repository.modifyFTS
+import io.github.ilyalisov.common.repository.specification.CommonSpec.hasStatus
+import jakarta.persistence.criteria.Expression
+import jakarta.persistence.criteria.Root
 import org.springframework.data.jpa.domain.Specification
 import java.util.*
 
@@ -26,14 +29,18 @@ object CommonSpec {
      *
      * @param T the type of entity extending BaseEntity
      * @param status the status to filter by
+     * @param statusPath the path to status field, default is 'status'
      * @return Specification that matches entities with the given status
      */
     fun <T : BaseEntity> hasStatus(
-        status: Status
+        status: Status,
+        statusPath: (Root<T>) -> Expression<*> = { root ->
+            root.get<Status>("status")
+        }
     ): Specification<T> {
         return Specification { root, _, criteriaBuilder ->
             criteriaBuilder.equal(
-                root.get<Status>("status"),
+                statusPath(root),
                 status
             )
         }
@@ -118,22 +125,25 @@ object CommonSpec {
 
     /**
      * Creates a specification to filter entities by their author's ID.
-     * Assumes entities have an "author" association with an "id" field.
      *
      * @param T the type of entity extending BaseEntity
      * @param id the author's UUID to filter by
+     * @param authorIdPath the path to author's ID field, default is 'author.id'
      * @return Specification that matches entities with the given author ID
      */
     fun <T : BaseEntity> hasAuthorId(
-        id: UUID?
+        id: UUID?,
+        authorIdPath: (Root<T>) -> Expression<*> = { root ->
+            root.get<Any>("author")
+                .get<UUID>("id")
+        }
     ): Specification<T> {
         return Specification { root, _, criteriaBuilder ->
             if (id == null) {
-                return@Specification criteriaBuilder.conjunction();
+                return@Specification criteriaBuilder.conjunction()
             }
             criteriaBuilder.equal(
-                root.get<Any>("author")
-                    .get<UUID>("id"),
+                authorIdPath(root),
                 id
             )
         }
@@ -223,6 +233,8 @@ object CommonSpec {
      * @param searchQuery the search query string to match against. If null or
      * blank, returns a specification that matches all entities (no filtering
      * applied)
+     * @param ftsPath the path to field for fts, default value is 'fts', but you
+     * can provide any other path
      * @param literal the PostgreSQL text search dictionary to use for
      * tokenization and stemming. Defaults to "russian". Common values include:
      *        - "russian" - for Russian language
@@ -239,6 +251,7 @@ object CommonSpec {
      */
     fun <T> containsQuery(
         searchQuery: String?,
+        ftsPath: (Root<T>) -> Expression<*> = { root -> root.get<Any>("fts") },
         literal: String = "russian"
     ): Specification<T> {
         return Specification { root, query, criteriaBuilder ->
@@ -257,7 +270,7 @@ object CommonSpec {
                     criteriaBuilder.function(
                         "ts_rank_cd",
                         Double::class.java,
-                        root.get<Any>("fts"),
+                        ftsPath(root),
                         tsquery
                     )
                 )
@@ -266,7 +279,7 @@ object CommonSpec {
                 criteriaBuilder.function(
                     "tsvector_match",
                     Boolean::class.java,
-                    root.get<Any>("fts"),
+                    ftsPath(root),
                     tsquery
                 )
             )
