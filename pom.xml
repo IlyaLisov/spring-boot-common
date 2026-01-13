@@ -60,7 +60,7 @@
         <kotlin.version>2.2.21</kotlin.version>
         <instancio.version>5.5.1</instancio.version>
         <checkstyle.version>3.6.0</checkstyle.version>
-        <springdoc.version>2.6.0</springdoc.version>
+        <springdoc.version>3.0.1</springdoc.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <log4j.version>2.25.2</log4j.version>
         <jwt.version>0.3.0</jwt.version>
